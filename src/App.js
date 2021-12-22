@@ -1,22 +1,37 @@
 
 import axios from 'axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 
 function App() {
 
-  const [ProductData, setProductData] = useState({});
 
-  const getData = async () => {
+  useEffect(async() => {
+      getProductData();
+  }, [])
+
+  const [ProductData, setProductData] = useState(
+    {
+      SKUs: [],
+      product: {},
+      vendor: {}
+    }
+  );
+
+  const getProductData = async () => {
     var productSlug = 'rntr-recruitment-only-product';
     var productApi = `https://app.getrntr.com/api/products/v2/by-location?url=${productSlug}`;
     try {
       const response = await axios.get(productApi);
-      setProductData(JSON.stringify(response.data));
+      setProductData(response.data);
     }
     catch (err) {
-
+      console.log(err)
     }
+  }
+
+  const printData = () => {
+    console.log(ProductData);
   }
 
   return (
@@ -31,11 +46,10 @@ function App() {
           href="https://reactjs.org"
           target="_blank"
           rel="noopener noreferrer"
-          onClick={getData}
         >
           Learn React
         </a>
-        <p onClick={ProductData}>Samee</p>
+        <p onClick={printData}>Samee</p>
       </header>
     </div>
   );
