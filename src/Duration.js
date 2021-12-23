@@ -105,7 +105,7 @@ function Duration(props) {
 
     return (
         <Fragment>
-            <div className="h3--size">Rental Duration (Days)</div>
+            <div className="h3--size">Rental Duration <span className="span--duration">(Days)</span></div>
             {
                 durations.map((duration, index) => {
                     return <Fragment>
