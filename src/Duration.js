@@ -79,7 +79,7 @@ function Duration(props) {
 
     return (
         <Fragment>
-            <div className="h3--size">Rental Duration (Days)</div>
+            <div className="h3--size duration--h3">Rental Duration <span className="span--duration">(Days)</span></div>
             {
                 durations.map((duration, index) => {
                     return <Fragment>
@@ -104,9 +104,12 @@ function Duration(props) {
             <Checkbox onChange={onChange}>Checkbox</Checkbox>
             <br />
             <br />
-            <button>Cancel</button>
             <hr />
-            <button>{`Pay Now ${Duration.duration.price}  ${Duration.duration.currency} `}</button>
+            <div className="btn--group">
+            <button className="btn--cncl">Cancel</button>
+            
+            <button className="btn--pay">{`Pay Now ${Duration.duration.price}  ${Duration.duration.currency} `}</button>
+            </div>
         </Fragment>
     );
 }
