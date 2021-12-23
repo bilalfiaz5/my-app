@@ -60,10 +60,6 @@ function App() {
               <div className='h1--title'>Hello this s the title</div>
               
               <Buttons productInfo={ProductData}/>
-              <hr className='divider'/>
-
-              <h3>Rs. 12,800</h3>
-              <button>Buy Now</button>
             </div>
           </div>
         </div>
