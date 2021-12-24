@@ -6,6 +6,7 @@ import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRange } from 'react-date-range';
 const { RangePicker } = DatePicker;
 
+document.querySelector("[placeholder='End date']") .disabled = true; 
 function Duration(props) {
 
     const durations = props.duration;
