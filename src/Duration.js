@@ -1,6 +1,6 @@
 import { Fragment, useState, useEffect } from "react";
 import moment from 'moment';
-import { DatePicker, Checkbox } from 'antd';
+import { DatePicker, Checkbox, Alert } from 'antd';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRange } from 'react-date-range';
@@ -11,23 +11,26 @@ function Duration(props) {
     const durations = props.duration;
     const days = props.productSku;
 
-    useEffect(() => {
-        
-    }, [])
-
     const [Duration, setDuration] = useState({
         duration: durations[0],
         index: 0
     });
 
-    // const [availableDate, setavailableDate] = useState({});
     const [open, setopen] = useState(false);
     const [availableSKU, setavailableSKU] = useState([]);
     const [sameDay, setsameDay] = useState(false);
-    
+    const [error, seterror] = useState({
+        message: "",
+        show: false
+    });
+
     const [dates, setDates] = useState([]);
     const [hackValue, setHackValue] = useState();
     const [value, setValue] = useState();
+
+    useEffect(() => {
+        showAvailability();
+    }, [])
 
     const setProductDuration = (duration, index) => {
         setDuration({ duration: duration, index: index });
@@ -39,12 +42,23 @@ function Duration(props) {
 
     const seperateAvailable = () => {
         var availableAfterToday = days.filter(day => moment(day.dateFrom) >= moment().add(4, "day") || moment(day.dateTo) >= moment().add(4, "day"));
-        var available = availableAfterToday.filter(day => day.status === "available");
-        setavailableSKU([...available]);
-        console.log(days);
-        console.log(availableAfterToday);
-        console.log(available);
+        var available = availableAfterToday.filter(day => day.status === "available").push(days[1]);
+        setavailableSKU(available);
+        // console.log(days);
+        // console.log(availableAfterToday);
+        // console.log(available);
+    }
 
+    const showAvailability = () => {
+
+        console.log(availableSKU);
+
+        if (availableSKU.length == 0) {
+            seterror({
+                message: "No Avaible product",
+                show: true
+            });
+        }
     }
 
 
@@ -65,7 +79,7 @@ function Duration(props) {
     const onOpenChange = open => {
         if (open) {
             setopen(open);
-            setHackValue([]);
+            setValue();
             setDates([]);
         } else {
             setopen(false);
@@ -75,7 +89,17 @@ function Duration(props) {
 
     function onChange(e) {
         setsameDay(e.target.checked);
-      }
+    }
+
+
+    const onUpdate = (val) =>{
+            var datefrom = val[0];
+            var suggest = moment(datefrom).endOf('day').add(Duration.duration.value - 1, "days");
+            var val = [datefrom, suggest];
+            console.log(val);
+            setValue([datefrom, suggest]);
+            setopen(false);
+    }
 
     return (
         <Fragment>
@@ -91,14 +115,15 @@ function Duration(props) {
             <br />
 
             <RangePicker
-                value={hackValue || value}
+                value={value}
                 disabledDate={disabledDate}
-                onCalendarChange={val => setDates(val)}
-                onChange={val => setValue(val)}
+                onCalendarChange={val => onUpdate(val)}
                 onOpenChange={onOpenChange}
                 open={open}
             />
-
+            <br />
+            <br />
+            {error ? (<Alert message={error.message} type="error" />) : ("")}
             <br />
             <br />
             <Checkbox onChange={onChange}>Checkbox</Checkbox>
