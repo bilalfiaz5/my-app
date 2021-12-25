@@ -42,7 +42,7 @@ function Buttons(props) {
                         <button className={`btn btn--size ${Sku.index === index ? "active" : null}`} onClick={() => setProductSku(sku, index)}>{sku.size}</button></Fragment>
                 })
             }
-            <br />
+            <hr />
              <Duration duration={Sku.sku.pricing} productSku={SkuData}/>
             <br />
         </Fragment>

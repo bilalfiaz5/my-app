@@ -1,11 +1,11 @@
 import { Fragment, useState, useEffect } from "react";
 import moment from 'moment';
-import { DatePicker, Checkbox, Alert } from 'antd';
+import { DatePicker, Checkbox, Alert, Input } from 'antd';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
 import { DateRange } from 'react-date-range';
 const { RangePicker } = DatePicker;
-document.querySelector("[placeholder='End date']") .disabled = true; 
+// document.querySelector("[placeholder='End date']") .disabled = true; 
 function Duration(props) {
 
     const durations = props.duration;
@@ -92,49 +92,44 @@ function Duration(props) {
     }
 
 
-    const onUpdate = (val) =>{
-            var datefrom = val[0];
-            var suggest = moment(datefrom).endOf('day').add(Duration.duration.value - 1, "days");
-            var val = [datefrom, suggest];
-            console.log(val);
-            setValue([datefrom, suggest]);
-            setopen(false);
+    const onUpdate = (val) => {
+        var datefrom = val[0];
+        var suggest = moment(datefrom).endOf('day').add(Duration.duration.value - 1, "days");
+        var val = [datefrom, suggest];
+        console.log(val);
+        setValue([datefrom, suggest]);
+        setopen(false);
     }
 
     return (
         <Fragment>
-            <div className="h3--size duration--h3">Rental Duration <span className="span--duration">(Days)</span></div>
             <div className="h3--size">Rental Duration <span className="span--duration">(Days)</span></div>
             {
                 durations.map((duration, index) => {
                     return <Fragment>
-                        <button className={`btn btn--size ${Duration.index === index ? "active" : null}`} onClick={() => setProductDuration(duration, index)}>{duration.value}</button>
+                        <button className={`btn btn--size btn--md ${Duration.index === index ? "active" : null}`} onClick={() => setProductDuration(duration, index)}>{duration.value} Days</button>
                     </Fragment>
                 })
             }
-            <br />
-            <br />
-
+        
             <RangePicker
                 value={value}
                 disabledDate={disabledDate}
                 onCalendarChange={val => onUpdate(val)}
                 onOpenChange={onOpenChange}
                 open={open}
+                className="date--selector"
             />
-            <br />
-            <br />
-            {error ? (<Alert message={error.message} type="error" />) : ("")}
-            <br />
-            <br />
-            <Checkbox onChange={onChange}>Checkbox</Checkbox>
-            <br />
-            <br />
+
+            {/* {error ? (<Alert message={error.message} type="error" />) : ("")} */}
             <hr />
+            <Checkbox onChange={onChange}>Same day delivery</Checkbox>
+            <Input placeholder="Only Sydney Metro postcode" />
+
             <div className="btn--group">
-            <button className="btn--cncl">Cancel</button>
-            
-            <button className="btn--pay">{`Pay Now ${Duration.duration.price}  ${Duration.duration.currency} `}</button>
+                <button className="btn--cncl">Cancel</button>
+
+                <button className="btn--pay">{`Pay Now ${Duration.duration.price}  ${Duration.duration.currency} `}</button>
             </div>
         </Fragment>
     );

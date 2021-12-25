@@ -1,35 +1,9 @@
 @import '~antd/dist/antd.css';
 @import url('https://fonts.googleapis.com/css?family=Poppins:400,500,600,800&display=swap');
 
-
-.testB1{
-    background: grey;
-    color: black;
-    border: none;
-    border-radius: 12px;
-}
-
-.testB1:hover{
-    background: black;
+.active {
+    background: #000 !important;
     color: white;
-    border: none;
-}
-
-.testB1::selection{
-    background: blue;
-    color: blue;
-    border: none;
-}
-
-.testB1::after{
-    background: blue;
-    color: blue;
-    border: none;
-}
-
-.active{
-background: #000 !important;
-color: white;
 }
 
 body {
@@ -65,9 +39,6 @@ body {
     transition: .3s linear;
 }
 
-
-
-
 .container .imgBx img {
     position: relative;
     width: 455px;
@@ -84,7 +55,7 @@ body {
     padding: 40px;
 }
 
-.container .details h2{
+.container .details h2 {
     margin: 0;
     padding: 0;
     font-size: 2.4em;
@@ -106,52 +77,97 @@ body {
     color: #a2a2a2;
     float: left;
 }
-.container .details button {
-    /* background: #000;
-    color: #fff;
-    border: none;
-    outline: none;
-    padding: 15px 20px;
-    margin-top: 5px;
-    font-size: 16px;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-    font-weight: 600;
-    border-radius: 40px;
-    float: right; */
-}
-.span--duration{
+
+.span--duration {
     font-size: 10px;
 }
-.duration--h3{
 
+hr {
+    margin-top: 15px;
+    color: gray;
+    opacity: 0.5;
+    margin-bottom: 15px;
+}
+
+.ant-checkbox {
+    margin: 10px 5px 20px 0px;
+}
+
+.ant-checkbox-inner {
+    width: 20px;
+    border-radius: 5px;
+    height: 20px;
+    border-color: black;
+}
+
+.ant-checkbox {
+    top: 0.4em;
+}
+
+.ant-input {
+    border-color: black;
+    border-radius: 10px;
+    height: 45px;
+    margin-bottom: 20px;
+
+}
+
+.ant-checkbox-checked .ant-checkbox-inner {
+    background-color: black;
+    border-color: black;
+}
+
+.ant-checkbox:hover {
+    color: black;
+}
+
+.date--selector {
+    margin-top: 15px;
+    border-radius: 10px;
+    width: 70%;
+    height: 50px;
+    border-color: black;
+}
+
+.duration--h3 {
     margin: 12px 0 0 0;
 }
-.btn--size{
 
-    /* position: absolute; */
-    width: 45px;
+.btn--size {
+    width: 52px;
     height: 45px;
-    /* left: 540px;
-    top: 189px; */
     background: #E7E7E7;
-    border-radius: 12px;
+    border-radius: 15px;
     margin-right: 12px;
+    border: none;
 }
+
+.btn--md {
+    width: 70px;
+}
+
+.h4--vendor {
+    color: gray;
+}
+
 .h3--size {
     font-size: 16px;
     line-height: 24px;
-    margin-bottom: 12px;
+    margin-bottom: 8px;
 }
+
 .h1--title {
     font-size: 32px;
     line-height: 48px;
     font-weight: 600;
-    margin-bottom: 16px;
-}hr.divider {
+    margin-bottom: 10px;
+}
+
+hr.divider {
     width: 400px;
     margin: 20px 0;
 }
+
 .product-colors span {
     width: 26px;
     height: 26px;
@@ -176,7 +192,7 @@ body {
     background: #F18557;
 }
 
-.product-colors .active:after{
+.product-colors .active:after {
     content: "";
     width: 36px;
     height: 36px;
@@ -188,11 +204,14 @@ body {
     top: -5px;
 }
 
+
 /* responsive */
+
 @media (max-width: 1080px) {
     .container {
         height: auto;
     }
+
     .container .imgBx {
         padding: 40px;
         box-sizing: border-box;
@@ -201,16 +220,19 @@ body {
         text-align: center;
         overflow: hidden;
     }
+
     .container .imgBx img {
         left: initial;
         max-width: 100%;
         transform: rotate(0deg);
     }
+
     .details {
         width: 100% !important;
         height: auto;
         padding: 20px;
     }
+
     .container .details p {
         margin-left: 0;
         max-width: 100%;
