@@ -28,7 +28,7 @@
 }
 
 .active{
-background: black;
+background: #000 !important;
 color: white;
 }
 
@@ -65,16 +65,8 @@ body {
     transition: .3s linear;
 }
 
-.container .imgBx:before {
-    content: 'Nike';
-    position: absolute;
-    top: 0px;
-    left: 24px;
-    color: #fff;
-    opacity: 0.2;
-    font-size: 8em;
-    font-weight: 800;
-}
+
+
 
 .container .imgBx img {
     position: relative;
@@ -128,11 +120,18 @@ body {
     border-radius: 40px;
     float: right; */
 }
+.span--duration{
+    font-size: 10px;
+}
+.duration--h3{
+
+    margin: 12px 0 0 0;
+}
 .btn--size{
 
     /* position: absolute; */
-    width: 43px;
-    height: 40px;
+    width: 45px;
+    height: 45px;
     /* left: 540px;
     top: 189px; */
     background: #E7E7E7;
