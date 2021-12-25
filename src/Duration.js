@@ -129,7 +129,7 @@ function Duration(props) {
             <div className="btn--group">
                 <button className="btn--cncl">Cancel</button>
 
-                <button className="btn--pay">{`Pay Now ${Duration.duration.price}  ${Duration.duration.currency} `}</button>
+                <button className="btn--pay">{`Add to Cart `}<span>{`${Duration.duration.price}  ${Duration.duration.currency}`}</span></button>
             </div>
         </Fragment>
     );

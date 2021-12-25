@@ -133,6 +133,27 @@ hr {
     margin: 12px 0 0 0;
 }
 
+.btn--cncl {
+    margin: 0px 10px 0px 0px;
+    width: 85px;
+    height: 40px;
+    padding: 10px;
+    color: black;
+    border-radius: 10px;
+    border: 1px solid;
+    background-color: white;
+}
+
+.btn--pay{
+    width: 75%;
+    height: 40px;
+    padding: 10px;
+    color: white;
+    border-radius: 10px;
+    background-color: black;
+    border: none;
+}
+
 .btn--size {
     width: 52px;
     height: 45px;
