@@ -19,6 +19,7 @@ function Duration(props) {
     const [open, setopen] = useState(false);
     const [availableSKU, setavailableSKU] = useState([]);
     const [sameDay, setsameDay] = useState(false);
+    const [showpostal, setshowpostal] = useState(false);
     const [error, seterror] = useState({
         message: "",
         show: false
@@ -31,13 +32,14 @@ function Duration(props) {
     useEffect(() => {
         document.querySelector("input[placeholder='End date']").disabled = true;
         showAvailability();
-    }, [])
+        updateSameDayDate();
+    }, [sameDay,Duration])
 
     const setProductDuration = (duration, index) => {
         setDuration({ duration: duration, index: index });
-        setopen(true);
         setDates([]);
         setHackValue([]);
+        updateSameDayDate();
         seperateAvailable();
     }
 
@@ -45,16 +47,14 @@ function Duration(props) {
         var availableAfterToday = days.filter(day => moment(day.dateFrom) >= moment().add(4, "day") || moment(day.dateTo) >= moment().add(4, "day"));
         var available = availableAfterToday.filter(day => day.status === "available").push(days[1]);
         setavailableSKU(available);
-        // console.log(days);
-        // console.log(availableAfterToday);
-        // console.log(available);
+        console.log(days);
+        console.log(availableAfterToday);
+        console.log(available);
     }
 
     const showAvailability = () => {
-
         console.log(availableSKU);
-
-        if (availableSKU.length == 0) {
+        if (availableSKU.length === 0) {
             seterror({
                 message: "No Avaible product",
                 show: true
@@ -92,12 +92,27 @@ function Duration(props) {
         setsameDay(e.target.checked);
     }
 
+   
+
+
+    const updateSameDayDate = () => {
+        if (sameDay) {
+            setshowpostal(true);
+            document.querySelector("input[placeholder='Start date']").disabled = true;
+            var datefrom = moment().endOf('day').add(3, "day");
+            var suggest = moment(datefrom).endOf('day').add(Duration.duration.value - 1, "days");
+            setValue([datefrom, suggest]);
+        }
+        else {
+            setshowpostal(false);
+            setValue();
+            setDates([]);
+        }
+    }
 
     const onUpdate = (val) => {
         var datefrom = val[0];
         var suggest = moment(datefrom).endOf('day').add(Duration.duration.value - 1, "days");
-        var val = [datefrom, suggest];
-        console.log(val);
         setValue([datefrom, suggest]);
         setopen(false);
     }
@@ -112,7 +127,10 @@ function Duration(props) {
                     </Fragment>
                 })
             }
-        
+
+            <Checkbox onChange={onChange}>Same day delivery</Checkbox>
+            {showpostal ? (<Input placeholder="Only Sydney Metro postcode" />) : ("")}
+
             <RangePicker
                 value={value}
                 disabledDate={disabledDate}
@@ -124,8 +142,7 @@ function Duration(props) {
 
             {/* {error ? (<Alert message={error.message} type="error" />) : ("")} */}
             <hr />
-            <Checkbox onChange={onChange}>Same day delivery</Checkbox>
-            <Input placeholder="Only Sydney Metro postcode" />
+
 
             <div className="btn--group">
                 <button className="btn--cncl">Cancel</button>

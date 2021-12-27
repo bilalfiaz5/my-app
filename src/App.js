@@ -56,8 +56,8 @@ function App() {
           </div>
           <div className="details">
             <div className="content">
-            <div className='h4--vendor'>RNTR</div>
-              <div className='h1--title'>Hello this s the title</div>
+            <div className='h4--vendor'>{ProductData.vendor.title}</div>
+              <div className='h1--title'>{ProductData.product.title}</div>
               
               <Buttons productInfo={ProductData}/>
             </div>

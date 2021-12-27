@@ -13,7 +13,6 @@ function Buttons(props) {
     useEffect(() => {
         (async () => {
             await getSku(Sku);
-            console.log(Sku);
         })()
     }, [Sku])
 
