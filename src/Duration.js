@@ -3,9 +3,9 @@ import moment from 'moment';
 import { DatePicker, Checkbox, Alert, Input } from 'antd';
 import 'react-date-range/dist/styles.css'; // main style file
 import 'react-date-range/dist/theme/default.css'; // theme css file
-import { DateRange } from 'react-date-range';
 const { RangePicker } = DatePicker;
-// document.querySelector("[placeholder='End date']") .disabled = true; 
+
+
 function Duration(props) {
 
     const durations = props.duration;
@@ -29,6 +29,7 @@ function Duration(props) {
     const [value, setValue] = useState();
 
     useEffect(() => {
+        document.querySelector("input[placeholder='End date']").disabled = true;
         showAvailability();
     }, [])
 
