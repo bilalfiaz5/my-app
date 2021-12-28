@@ -104,6 +104,7 @@ function Duration(props) {
             setValue([datefrom, suggest]);
         }
         else {
+            document.querySelector("input[placeholder='Start date']").disabled = false;
             setshowpostal(false);
             setValue();
             setDates([]);
