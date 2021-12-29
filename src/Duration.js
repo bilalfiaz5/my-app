@@ -35,9 +35,10 @@ function Duration(props) {
         document.querySelector("input[placeholder='End date']").disabled = true;
     }, [sameDay, Duration])
 
-    // Sets the selected duration and updates the dates and value of calender to empty 
+    // Sets the selected duration and updates the dates and value of calender to empty and alert to hide
     const setProductDuration = (duration, index) => {
         setDuration({ duration: duration, index: index });
+        setavailable(false);
         setDates([]);
         setHackValue([]);
         updateSameDayDate();
