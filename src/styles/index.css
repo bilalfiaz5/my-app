@@ -228,6 +228,9 @@ hr.divider {
 .btn--group {
     margin: 10px 0 0 0;
 }
+.btn--group {
+    font-size: 14px;
+}
 @media screen and (max-width:600px) {
 
     body{
@@ -276,11 +279,14 @@ hr.divider {
     .container .details {
         padding: 0px 40px 40px 40px;
     }
+    .btn--group {
+        font-size: 12px;
+    }
 }
-@media only screen and (min-width: 600px) and (max-width: 810px) {
+@media only screen and (min-width: 601px) and (max-width: 850px) {
 
     .container{
-        width: 100%;
+        width: 600px;
         height: auto;
     }
     .container .imgBx img {
@@ -290,6 +296,15 @@ hr.divider {
     }
     .imgBx {
         padding: 40px;
+    }
+    .ant-checkbox-wrapper {
+        display: flex;
+    }
+    .container .imgBx {
+        width: 100%;
+    }
+    .container .details {
+        width: 100%;
     }
 }
 
