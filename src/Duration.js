@@ -13,7 +13,7 @@ function Duration(props) {
     // select the first duration by default
     const [Duration, setDuration] = useState({
         duration: durations[0],
-        index: -1
+        index: 0
     });
 
     const [open, setopen] = useState(false);
@@ -21,6 +21,8 @@ function Duration(props) {
     const [sameDay, setsameDay] = useState(false);
     const [showpostal, setshowpostal] = useState(false);
     const [available, setavailable] = useState(false);
+    const [notavailable, setnotavailable] = useState(false);
+
 
     const [dates, setDates] = useState([]);
     const [hackValue, setHackValue] = useState();
@@ -31,21 +33,28 @@ function Duration(props) {
     useEffect(() => {
         (async () => {
             setProductDuration(Duration.duration, Duration.index);
-            updateSameDayDate();
+            // updateSameDayDate();
         })()
         document.querySelector("input[placeholder='End date']").disabled = true;
     }, [sameDay])
 
-    // Call every time when the date is changes
+      // Call every time when the date is changes
     useEffect(() => {
         if (value != null) {
             showAvailability(value);
         }
     }, [value]);
 
+
+      // Call every time when the duration is changes
+      useEffect(() => {
+        updateSameDayDate();
+    }, [Duration]);
+
     // Sets the selected duration and updates the dates and value of calender to empty and alert to hide
     const setProductDuration = (duration, index) => {
         setDuration({ duration: duration, index: index });
+        setnotavailable(false);
         setavailable(false);
         setDates([]);
         setHackValue([]);
@@ -126,7 +135,7 @@ function Duration(props) {
         const dateto = moment(value[1]).format("L");
 
         if (availablesku.length === 0) {
-            setavailable(true);
+            setnotavailable(true);
         }
         else {
             availablesku.map(e => {
@@ -139,19 +148,23 @@ function Duration(props) {
 
                     // if product dateFrom lies between the selected data then product is available else it is not
                     if (productdatefrom <= datefrom) {
-                        setavailable(false);
+                        setnotavailable(false);
+                        setavailable(true);
                     }
                     else {
-                        setavailable(true);
+                        setnotavailable(true);
+                        setavailable(false);
                     }
                 }
                 else {
                     // if we dont have the dateTO null then we will check product dateFrom lies between the selected data 
                     if (e.dateFrom <= datefrom && e.dateFrom >= dateto) {
-                        setavailable(false);
+                        setnotavailable(false);
+                        setavailable(true);
                     }
                     else {
-                        setavailable(true);
+                        setnotavailable(true);
+                        setavailable(false);
                     }
                 }
             });
@@ -190,8 +203,8 @@ function Duration(props) {
             />
 
             {/* Alert that will notify if product is not available */}
-            {available ? (<Alert message="Product Not Available" type="error" className="error" />) : ("")}
-
+            {notavailable ? (<Alert message="Product Not Available" type="error" className="error" showIcon={true}/>) : ("")}
+            {available ? (<Alert message="Product Available" type="success" className="error" showIcon={true}/>) : ("")}
             <hr />
 
             {/* Display the remaining button with duration price and currency */}
