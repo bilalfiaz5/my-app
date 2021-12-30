@@ -13,7 +13,7 @@ function Duration(props) {
     // select the first duration by default
     const [Duration, setDuration] = useState({
         duration: durations[0],
-        index: 0
+        index: -1
     });
 
     const [open, setopen] = useState(false);
@@ -33,10 +33,9 @@ function Duration(props) {
     useEffect(() => {
         (async () => {
             setProductDuration(Duration.duration, Duration.index);
-            // updateSameDayDate();
         })()
         document.querySelector("input[placeholder='End date']").disabled = true;
-    }, [sameDay])
+    }, [])
 
       // Call every time when the date is changes
     useEffect(() => {
@@ -47,9 +46,9 @@ function Duration(props) {
 
 
       // Call every time when the duration is changes
-      useEffect(() => {
+    useEffect(async() => {
         updateSameDayDate();
-    }, [Duration]);
+    }, [Duration,sameDay]);
 
     // Sets the selected duration and updates the dates and value of calender to empty and alert to hide
     const setProductDuration = (duration, index) => {
@@ -116,7 +115,6 @@ function Duration(props) {
             setValue();
             setDates([]);
             setdisabledates([false, false]);
-            // document.querySelector("input[placeholder='End date']").disabled = false;
         }
     }
 
