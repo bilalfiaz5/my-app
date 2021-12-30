@@ -203,8 +203,8 @@ function Duration(props) {
             />
 
             {/* Alert that will notify if product is not available */}
-            {notavailable ? (<Alert message="Product Not Available" type="error" className="error" />) : ("")}
-            {available ? (<Alert message="Product Available" type="success" className="error" />) : ("")}
+            {notavailable ? (<Alert message="Product Not Available" type="error" className="error" showIcon={true}/>) : ("")}
+            {available ? (<Alert message="Product Available" type="success" className="error" showIcon={true}/>) : ("")}
             <hr />
 
             {/* Display the remaining button with duration price and currency */}
