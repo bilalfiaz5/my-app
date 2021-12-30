@@ -8,15 +8,16 @@ const { RangePicker } = DatePicker;
 function Duration(props) {
     // contains the duration of the product
     const durations = props.duration;
+    const days = props.productSku;
 
     // select the first duration by default
     const [Duration, setDuration] = useState({
         duration: durations[0],
-        index: 0
+        index: -1
     });
 
     const [open, setopen] = useState(false);
-    const [availablesku, setavailablesku] = useState([]);
+    const [availablesku, setavailablesku] = useState();
     const [sameDay, setsameDay] = useState(false);
     const [showpostal, setshowpostal] = useState(false);
     const [available, setavailable] = useState(false);
@@ -29,11 +30,18 @@ function Duration(props) {
     // get the information for availble product of first sku
     useEffect(() => {
         (async () => {
+            setProductDuration(Duration.duration, Duration.index);
             updateSameDayDate();
-            seperateAvailable(props.productSku);
         })()
         document.querySelector("input[placeholder='End date']").disabled = true;
-    }, [sameDay, Duration])
+    }, [sameDay])
+
+    // Call every time when the date is changes
+    useEffect(() => {
+        if (value != null) {
+            showAvailability(value);
+        }
+    }, [value]);
 
     // Sets the selected duration and updates the dates and value of calender to empty and alert to hide
     const setProductDuration = (duration, index) => {
@@ -46,15 +54,9 @@ function Duration(props) {
     }
 
     // this function seperate all the days on some creteria first is the status available and second is the date lies in between the three days from current date 
-    const seperateAvailable = (days) => {
+    const seperateAvailable = () => {
         var availableAfterToday = days.filter(day => moment(day.dateFrom) >= moment().add(4, "day") || moment(day.dateTo) >= moment().add(4, "day"));
-        var available = availableAfterToday.filter(day => day.status == "available");
-
-        days.map((day, i) => {
-            if (day.dateTo == null) {
-                return available.push(day);
-            }
-        });
+        var available = availableAfterToday.filter(day => day.status == "available" || day.dateTo == null);
         setavailablesku(available);
     }
 
@@ -69,7 +71,7 @@ function Duration(props) {
             return current > moment().endOf('day').add(Duration.duration.value - 1, "days") || current < moment().endOf('day').subtract(1, "day");
         }
 
-        // This simply disabble the preoius dates and 3 date after the current date
+        // This simply disable the previous dates and 3 date after the current date becasue we have dissable 3 days after current date 
         const tooLate = dates[0] && current.diff(dates[0], 'days') > Duration.duration.value - 1;
         return tooLate || current < moment().endOf('day').add(3, "day");
     };
@@ -105,22 +107,24 @@ function Duration(props) {
             setValue();
             setDates([]);
             setdisabledates([false, false]);
-            document.querySelector("input[placeholder='End date']").disabled = false;
+            // document.querySelector("input[placeholder='End date']").disabled = false;
         }
     }
 
     // This function is called when we select the date from the calender and hence calulate the range and availablity of the product
     const onUpdate = (val) => {
         var datefrom = val[0];
-        var suggest = moment(datefrom).endOf('day').add(Duration.duration.value - 1, "days");
-        setValue([datefrom, suggest]);
+        var dateto = moment(datefrom).endOf('day').add(Duration.duration.value - 1, "days");
+        setValue([datefrom, dateto]);
         setopen(false);
-        showAvailability(datefrom, suggest);
     }
 
 
     // The function checks the availablity of the product from the selected date given by the user 
-    const showAvailability = (datefrom, dateto) => {
+    const showAvailability = () => {
+        const datefrom = moment(value[0]).format("L");
+        const dateto = moment(value[1]).format("L");
+
         if (availablesku.length === 0) {
             setavailable(true);
         }
@@ -128,8 +132,13 @@ function Duration(props) {
             availablesku.map(e => {
                 // if we have the dateTO null then we will check with only dateFrom of the product
                 if (e.dateTo == null) {
+
+                    // Substract the one day beacsue it was converting to extra one day due to timezone
+                    const productdatefrom = moment(e.dateFrom).subtract(1, "days").format("L");
+                    const productdateto = moment(e.dateTo).subtract(1, "days").format("L");
+
                     // if product dateFrom lies between the selected data then product is available else it is not
-                    if (e.dateFrom >= datefrom) {
+                    if (productdatefrom <= datefrom) {
                         setavailable(false);
                     }
                     else {
@@ -138,7 +147,7 @@ function Duration(props) {
                 }
                 else {
                     // if we dont have the dateTO null then we will check product dateFrom lies between the selected data 
-                    if (e.dateFrom >= datefrom && e.dateFrom <= dateto) {
+                    if (e.dateFrom <= datefrom && e.dateFrom >= dateto) {
                         setavailable(false);
                     }
                     else {
@@ -153,7 +162,7 @@ function Duration(props) {
     return (
         <Fragment>
             <div className="h3--size">Rental Duration <span className="span--duration">(Days)</span></div>
-            
+
             {/* Show button for different duration */}
             {
                 durations.map((duration, index) => {

@@ -42,7 +42,7 @@ function Data(props) {
                 // Shows the all sku from the product
                 skus.map((sku, index) => {
                     return <Fragment>
-                        <button className={`btn btn--size ${Sku.index === index ? "active" : null}`} onClick={() => setProductSku(sku, index)}>{sku.size}</button></Fragment>
+                        <button className={`btn btn--size ${Sku.index === index ? "active" : null}`} onClick={() => setProductSku(sku, index)} key={index+1} >{sku.size}</button></Fragment>
                 })
             }
             <hr />
