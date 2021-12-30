@@ -200,6 +200,7 @@ function Duration(props) {
                 open={open}
                 className="date--selector"
                 disabled={disabledates}
+                format="DD-MM-YYYY"
             />
 
             {/* Alert that will notify if product is not available */}
