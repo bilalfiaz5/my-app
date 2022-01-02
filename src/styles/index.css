@@ -311,6 +311,12 @@ hr.divider {
 .error{
     margin-top: 10px;
 }
+.btn {
+    cursor: pointer;
+}
+.btn--group * {
+    cursor: pointer;
+}
 
 /* responsive */
 
